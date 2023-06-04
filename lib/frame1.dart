@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_const, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'frame5.dart';
 import 'frame6.dart';
@@ -9,7 +10,15 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class frame1 extends StatelessWidget {
-  const frame1({super.key});
+  frame1({super.key});
+
+  final usernameEmailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  void signInUser() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: usernameEmailController.text, password: passwordController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +52,8 @@ class frame1 extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Card(
                   child: TextFormField(
+                    // UsernameEmailController--------------------------------
+                    controller: usernameEmailController,
                     decoration: InputDecoration(
                       hintText: 'Enter username',
                       labelText: 'Username',
@@ -67,6 +78,8 @@ class frame1 extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Card(
                   child: TextFormField(
+                    // passwordController---------------------------------------
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Enter password',
@@ -109,7 +122,7 @@ class frame1 extends StatelessWidget {
                 ),
               ),
 
-              //login button
+              //login button------------------------------------------
               SizedBox(
                 width: 250.0,
                 height: 50.0,
@@ -117,10 +130,7 @@ class frame1 extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromRGBO(192, 233, 93, 10)),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const frame5()),
-                    );
+                    return signInUser();
                   },
                   child: Text(
                     'Login',

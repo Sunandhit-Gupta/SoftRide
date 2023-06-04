@@ -1,10 +1,19 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, unused_import
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:soft_ride/auth_page.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'frame1.dart';
 
-void main() {
+void main() async {
+  // Integrating Firebase --------------------
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // ----------------------------------------------
+
   runApp(
     MaterialApp(
       home: Softride(),
@@ -52,16 +61,16 @@ class Softride extends StatelessWidget {
                   ),
                 ),
                 Card(
+                  // NAVIGATE IT TO AuthPage-------------------
                   child: Expanded(
                     child: TextButton(
                       onPressed: () {
-                        print('hi');
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const frame1()),
+                          MaterialPageRoute(builder: (context) => MyAuth()),
                         );
                       },
+                      // -------------------------------------------------------
                       child: ListTile(
                         title: Text(
                           'Get Started',
