@@ -1,27 +1,28 @@
-// ignore_for_file: unnecessary_const, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import
+// import 'dart:js';
+// import 'dart:js';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:soft_ride/frame3.dart';
-import 'frame5.dart';
-import 'frame6.dart';
+import 'package:soft_ride/auth_page.dart';
+import 'frame1.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'frame4.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class frame1 extends StatelessWidget {
-  frame1({super.key});
+class frame3 extends StatelessWidget {
+  frame3({super.key});
 
-  final usernameEmailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final usernameEmailInputRegisterController = TextEditingController();
+  final passwordInputRegisterController = TextEditingController();
+  final userNameInputRegisterController = TextEditingController();
 
-  void signInUser() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: usernameEmailController.text, 
-        password: passwordController.text);
+  void registerNew() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: usernameEmailInputRegisterController.text,
+        password: passwordInputRegisterController.text);
+    FirebaseAuth.instance.signOut();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,8 +33,8 @@ class frame1 extends StatelessWidget {
           toolbarHeight: 200,
           backgroundColor: HexColor('#0C1B2E'),
           centerTitle: true, // Increase the height here
-          title: Text(
-            'Welcome',
+          title: const Text(
+            'Register',
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -44,21 +45,42 @@ class frame1 extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
 
-              // text field for username
+              // Text Input for Name-----------------------------------
 
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Card(
                   child: TextFormField(
                     // UsernameEmailController--------------------------------
-                    controller: usernameEmailController,
-                    decoration: InputDecoration(
-                      hintText: 'Enter username',
-                      labelText: 'Username',
+                    controller: userNameInputRegisterController,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter Name',
+                      labelText: 'Full Name',
+                      labelStyle: TextStyle(color: Colors.black),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color.fromRGBO(192, 233, 93, 10),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // text field for username
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Card(
+                  child: TextFormField(
+                    // UsernameEmailController--------------------------------
+                    controller: usernameEmailInputRegisterController,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter Email',
+                      labelText: 'Email',
                       labelStyle: TextStyle(color: Colors.black),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -81,9 +103,9 @@ class frame1 extends StatelessWidget {
                 child: Card(
                   child: TextFormField(
                     // passwordController---------------------------------------
-                    controller: passwordController,
+                    controller: passwordInputRegisterController,
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Enter password',
                       labelText: 'Password',
                       labelStyle: TextStyle(color: Colors.black),
@@ -97,45 +119,33 @@ class frame1 extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
 
-              //forget password
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const frame6()),
-                      );
-                    },
-                    child: Text(
-                      'Forget Password?',
-                      style: TextStyle(
-                          color: Color.fromRGBO(122, 158, 37, 0.965),
-                          fontWeight: FontWeight.bold),
-                      // textAlign: TextAlign.right,
-                    ),
-                  ),
-                ),
-              ),
-
-              //login button------------------------------------------
+              //---------Register button------------------------------------------
               SizedBox(
                 width: 250.0,
                 height: 50.0,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(192, 233, 93, 10)),
+                      backgroundColor: const Color.fromRGBO(192, 233, 93, 10)),
                   onPressed: () {
-                    return signInUser();
+                    registerNew();
+
+                    // FirebaseAuth.instance
+                    //     .authStateChanges()
+                    //     .listen((User? user) {
+                    //   if (user == null) {
+
+                    //   } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MyAuth()));
+                    //   }
+                    // });
                   },
                   child: Text(
-                    'Login',
+                    'Register',
                     style: TextStyle(
                         color: HexColor('#0C1B2E'),
                         fontWeight: FontWeight.bold,
@@ -144,13 +154,13 @@ class frame1 extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
 
               //     divider
 
-              SizedBox(
+              const SizedBox(
                 width: 200.0,
                 child: Divider(
                   color: Colors.black,
@@ -172,7 +182,7 @@ class frame1 extends StatelessWidget {
                       },
                       child: Row(
                         children: [
-                          Image(
+                          const Image(
                             image: AssetImage('assets/google.png'),
                             height: 34.0,
                           ),
@@ -199,8 +209,8 @@ class frame1 extends StatelessWidget {
                       },
                       child: Row(
                         children: [
-                          Icon(FontAwesomeIcons.facebook),
-                          SizedBox(
+                          const Icon(FontAwesomeIcons.facebook),
+                          const SizedBox(
                             width: 10.0,
                           ),
                           Text(
@@ -220,24 +230,31 @@ class frame1 extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Don\'t have an account?'),
-              TextButton(
-                // Register BUTTON-----------------------------------
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => frame3()));
-                },
+          child: TextButton(
+            // -------------------------------
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: ((context) => frame1()),
+                ),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
-                  'Register',
+                  'LoginPage',
                   style: TextStyle(
                       color: Color.fromRGBO(122, 158, 37, 0.965),
                       fontWeight: FontWeight.bold),
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),

@@ -27,7 +27,7 @@ class Softride extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(137, 32, 30, 30),
+      backgroundColor: Color.fromARGB(136, 183, 99, 99),
       body: SafeArea(
         child: Center(
           child: Padding(
